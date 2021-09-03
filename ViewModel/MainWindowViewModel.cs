@@ -38,9 +38,7 @@ namespace Calculator.ViewModel
                 OnPropertyChanged("Result");
             }
         }
-
         #endregion
-
 
         #region Relay Commands
         //Click button command
@@ -57,16 +55,68 @@ namespace Calculator.ViewModel
                 return clickButton;
             }
         }
+        private RelayCommand clearButton;
+
+        public ICommand ClearButton
+        {
+            get
+            {
+                if (clearButton == null)
+                {
+                    clearButton = new RelayCommand(param => Clear(param), CanClear);
+                }
+                return clearButton;
+            }
+        }
+
+        private RelayCommand clearLastValue;
+
+        public ICommand ClearLastValue
+        {
+            get
+            {
+                if (clearLastValue == null)
+                {
+                    clearLastValue = new RelayCommand(param => ClearLastV(param), CanClearLastV);
+                }
+                return clearLastValue;
+            }
+        }
+
+
+        #endregion
+
+        #region Methods
+
+
+        private void ClearLastV(object param)
+        {
+            Result = Result.Remove(Result.Length - 1, 1);
+        }
+
+        private bool CanClearLastV(object obj)
+        {
+            return true;
+        }
+
+        private bool CanClear(object obj)
+        {
+            return true;
+        }
+
+        private void Clear(object param)
+        {
+            Result = string.Empty;
+        }
 
         private bool CanClickButtonCommand(object param)
         {
             return true;
         }
 
-        private void ClickButtonCommand(object param)
+        private void ClickButtonCommand(object buttonValue)
         {
-            Result = "0";
-            //MessageBox.Show("Button Clicked"); ;
+            Result += buttonValue.ToString();
         }
 
         #endregion
