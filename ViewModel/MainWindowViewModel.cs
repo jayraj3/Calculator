@@ -13,7 +13,6 @@ namespace Calculator.ViewModel
         #region Public Properties
 
         private string _result;
-        private bool hasCalculated = false;
 
 
         public string Result
@@ -90,7 +89,13 @@ namespace Calculator.ViewModel
 
         private void ClearLastV(object param)
         {
-            Result = Result.Remove(Result.Length - 1, 1);
+            if (Result != null)
+            {
+                if (Result.Length > 0)
+                {
+                    Result = Result.Remove(Result.Length - 1, 1);
+                }
+            }
         }
 
         private bool CanClearLastV(object obj)
@@ -115,11 +120,7 @@ namespace Calculator.ViewModel
 
         private void ClickButtonCommand(object buttonValue)
         {
-            if (hasCalculated)
-            {
-                Clear();
-                hasCalculated = false;
-            }
+
             Result += buttonValue.ToString();
         }
 
@@ -132,7 +133,6 @@ namespace Calculator.ViewModel
         {
             ExpressionCalculator calc = new ExpressionCalculator();
             Result = calc.Calculate(Result).ToString();
-            hasCalculated = true;
         }
 
         #endregion
