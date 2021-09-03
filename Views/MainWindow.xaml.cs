@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Calculator.ViewModel;
 
 namespace Calculator
 {
@@ -20,9 +21,13 @@ namespace Calculator
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private MainWindowViewModel mainWindowViewModel;
         public MainWindow()
         {
             InitializeComponent();
+            mainWindowViewModel = new MainWindowViewModel();
+            DataContext = mainWindowViewModel;
         }
     }
 }
