@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Calculator.Common.Commands;
+using Calculator.Core.Calculators;
 
 namespace Calculator.ViewModel
 {
@@ -11,25 +12,9 @@ namespace Calculator.ViewModel
     {
         #region Public Properties
 
-        private float _number;
-        private string _operation;
         private string _result;
+        private bool hasCalculated = false;
 
-        public float Number
-        {
-            get { return _number; }
-            set { _number = value;
-                OnPropertyChanged("Number");
-            }
-        }
-
-        public string Operation
-        {
-            get { return _operation; }
-            set { _operation = value;
-                OnPropertyChanged("Operation");
-            }
-        }
 
         public string Result
         {
@@ -41,7 +26,7 @@ namespace Calculator.ViewModel
         #endregion
 
         #region Relay Commands
-        //Click button command
+        //Click button command0
         private RelayCommand clickButton;
 
         public ICommand ClickButton
@@ -63,7 +48,7 @@ namespace Calculator.ViewModel
             {
                 if (clearButton == null)
                 {
-                    clearButton = new RelayCommand(param => Clear(param), CanClear);
+                    clearButton = new RelayCommand((paran) => Clear(), CanClear);
                 }
                 return clearButton;
             }
@@ -80,6 +65,20 @@ namespace Calculator.ViewModel
                     clearLastValue = new RelayCommand(param => ClearLastV(param), CanClearLastV);
                 }
                 return clearLastValue;
+            }
+        }
+
+        private RelayCommand performCalculation;
+
+        public ICommand PerformCalculation
+        {
+            get
+            {
+                if (performCalculation == null)
+                {
+                    performCalculation = new RelayCommand(param => PCalculation(param), CanPCalculation);
+                }
+                return performCalculation;
             }
         }
 
@@ -104,7 +103,7 @@ namespace Calculator.ViewModel
             return true;
         }
 
-        private void Clear(object param)
+        private void Clear()
         {
             Result = string.Empty;
         }
@@ -116,7 +115,24 @@ namespace Calculator.ViewModel
 
         private void ClickButtonCommand(object buttonValue)
         {
+            if (hasCalculated)
+            {
+                Clear();
+                hasCalculated = false;
+            }
             Result += buttonValue.ToString();
+        }
+
+        private bool CanPCalculation(object obj)
+        {
+            return true;
+        }
+
+        private void PCalculation(object param)
+        {
+            ExpressionCalculator calc = new ExpressionCalculator();
+            Result = calc.Calculate(Result).ToString();
+            hasCalculated = true;
         }
 
         #endregion
