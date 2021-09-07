@@ -65,6 +65,8 @@ namespace Calculator.ViewModel
             }
         }
 
+
+
         #endregion
         #region Methods
 
