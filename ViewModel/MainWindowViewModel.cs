@@ -14,6 +14,13 @@ namespace Calculator.ViewModel
 
         private string _result;
 
+        private WindowControlViewModel windowControlVM = new WindowControlViewModel();
+
+        public WindowControlViewModel WindowControlVM 
+        {
+            get { return windowControlVM; }
+        }
+
 
         public string Result
         {

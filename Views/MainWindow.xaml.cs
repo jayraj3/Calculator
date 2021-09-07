@@ -23,11 +23,13 @@ namespace Calculator
     {
 
         private MainWindowViewModel mainWindowViewModel;
+        private WindowControlViewModel windowControlVM;
         public MainWindow()
         {
             InitializeComponent();
             mainWindowViewModel = new MainWindowViewModel();
-            DataContext = mainWindowViewModel;
+            
+           DataContext = mainWindowViewModel;
         }
     }
 }
