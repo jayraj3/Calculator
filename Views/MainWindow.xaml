@@ -53,7 +53,7 @@
         <Grid>
             <!-- Main window structure-->
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
                     <ColumnDefinition/>
 
                 </Grid.ColumnDefinitions>
@@ -78,7 +78,7 @@
             <!-- Attached selection button-->
             <StackPanel Grid.Column="0" Grid.Row="1">
                     <RadioButton Command="{Binding MainView}" Style="{StaticResource MenuButton}"  Content="Standard" Foreground="White"  Height="40" />
-                    <RadioButton Command="{Binding OtherView}" Style="{StaticResource MenuButton}" Content="Other" Foreground="White" Height="40"  />
+                <RadioButton Command="{Binding CurrencyConvertView}" Style="{StaticResource MenuButton}" Content="Currency Converter" Foreground="White" Height="40"  />
             </StackPanel >
             <!-- Attached View-->
             <ContentControl Grid.Row="1" Grid.Column="1"  Content="{Binding CurrentView}">

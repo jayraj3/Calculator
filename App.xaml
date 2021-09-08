@@ -9,8 +9,8 @@
         <DataTemplate DataType="{x:Type viewModels:NormalCalculator}">
             <views:NormalCalculator/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModels:OtherViewModel}">
-            <views:Other/>
+        <DataTemplate DataType="{x:Type viewModels:CurrencyConverterViewModel}">
+            <views:CurrencyConverterView/>
         </DataTemplate>
     </Application.Resources>
 </Application>

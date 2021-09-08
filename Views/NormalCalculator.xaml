@@ -93,6 +93,7 @@
             <TextBox Grid.ColumnSpan="4" Grid.Column="0" Grid.Row="0" FontSize="20" Text="{Binding Path=Result,  Mode=TwoWay}" Padding="5 12 0 0" Margin="5 10 5 10" />
 
             <!-- Numbers buttons-->
+        
             <Button Grid.Column="0" Grid.Row="1" Margin="5">1</Button>
             <Button Grid.Column="0" Grid.Row="2" Margin="5">4</Button>
             <Button Grid.Column="0" Grid.Row="3" Margin="5">7</Button>

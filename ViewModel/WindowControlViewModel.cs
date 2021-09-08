@@ -20,7 +20,7 @@ namespace Calculator.ViewModel
         }
 
         public NormalCalculator normalCalculator { get; set; }
-        public OtherViewModel otherM { get; set; }
+        public CurrencyConverterViewModel CurrencyConverterVM { get; set; }
         private object _currentView;
         public object CurrentView
         {
@@ -89,20 +89,20 @@ namespace Calculator.ViewModel
         }
 
 
-        private RelayCommand _otherView;
+        private RelayCommand _currencyConverView;
         /// <summary>
         /// Change to other window command
         /// </summary>
-        public ICommand OtherView
+        public ICommand CurrencyConvertView
         {
             get
             {
-                if (_otherView == null)
+                if (_currencyConverView == null)
                 {
-                    _otherView = new RelayCommand(param => OpenOtherView(param), CanClickOtherView);
+                    _currencyConverView = new RelayCommand(param => OpenCurrencyConvertView(param), CanClickCurrencyConvertView);
                 }
 
-                return _otherView;
+                return _currencyConverView;
 
             }
         }
@@ -178,12 +178,12 @@ namespace Calculator.ViewModel
         }
 
 
-        private void OpenOtherView(object param)
+        private void OpenCurrencyConvertView(object param)
         {
-            CurrentView = otherM;
+            CurrentView = CurrencyConverterVM;
         }
 
-        private bool CanClickOtherView(object obj)
+        private bool CanClickCurrencyConvertView(object obj)
         {
             return true;
         }
@@ -203,7 +203,7 @@ namespace Calculator.ViewModel
         public WindowControlViewModel()
         {
             normalCalculator = new NormalCalculator();
-            otherM = new OtherViewModel();
+            CurrencyConverterVM = new CurrencyConverterViewModel();
             CurrentView = normalCalculator;
 
         }
