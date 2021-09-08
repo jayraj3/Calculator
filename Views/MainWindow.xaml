@@ -4,84 +4,86 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
+        xmlns:viewModels="clr-namespace:Calculator.ViewModel"
+         xmlns:views="clr-namespace:Calculator.Views"
         mc:Ignorable="d"
         WindowStyle="None"
-        Background="#36383f"
         AllowsTransparency="False"
         ResizeMode="CanResizeWithGrip"
-        Height="400" Width="650">
+        Height="500" Width="650">
 
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Command" Value="{Binding ClickButton}" />
-            <Setter Property="CommandParameter"  Value="{Binding Content,RelativeSource={RelativeSource Self}}"/>
-            <Setter Property="BorderBrush" Value="Aqua"/>
+        <!--Radio button style-->
+        <Style TargetType="RadioButton"
+               x:Key="MenuButton">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch"
+                                  Background="{TemplateBinding Background}">
+                                <TextBlock Text="{TemplateBinding Content}"
+                                           VerticalAlignment="Center"
+                                           FontSize="15"
+                                           Margin="15 0 0 0"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#22202f" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
-
     </Window.Resources>
-
+    
+    <Window.DataContext>
+        <!-- Datacontext of ViewModel-->
+        <viewModels:WindowControlViewModel/>
+    </Window.DataContext>
+    
+    <Border Background="#372537"
+            CornerRadius="10">
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            <!-- Main window structure-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition/>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+        
             <!-- Titlebar border -->
-            <Border Grid.ColumnSpan="5" Background="#252525" MouseDown="Border_MouseDown">
+            <Border Grid.ColumnSpan="5" Background="#252525" CornerRadius="10" MouseDown="Border_MouseDown">
                 <Grid HorizontalAlignment="Stretch">
-                <Label Content="Calculator" Foreground="Gray" FontWeight="SemiBold"/>
-                <StackPanel HorizontalAlignment="Right"
-                            Orientation="Horizontal">
-                    <Button DataContext="{Binding WindowControlVM}" Command="{Binding MinimizeButton}" Width="20" Height="20" Content="🗕" Background="Transparent" BorderThickness="0" Foreground="Gray" FontWeight="Bold" Margin="0 0 0 3"/>
-                    <Button DataContext="{Binding WindowControlVM}" Command="{Binding MaximizeButton}" Width="20" Height="20" Content="□" Background="Transparent" BorderThickness="0" Foreground="Gray" FontWeight="Bold"/>
-                    <Button DataContext="{Binding WindowControlVM}" Command="{Binding CloseButton}" Width="20" Height="20" Content="🞩" Background="Transparent" BorderThickness="0" Foreground="Gray" FontWeight="Bold"/>
-                </StackPanel>
-            </Grid>
+                    <Label Content="Calculator" FontSize="20" Foreground="Gray" FontWeight="SemiBold" Margin="5,0,0,0"/>
+                    <StackPanel HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button Command="{Binding MinimizeButton}" Width="30" Height="30" Content="🗕" Background="Transparent" BorderThickness="0" Foreground="Gray" FontWeight="Bold" Margin="0 0 0 3"/>
+                        <Button Command="{Binding MaximizeButton}" Width="30" Height="30" Content="□" Background="Transparent" BorderThickness="0" Foreground="Gray" FontWeight="Bold"/>
+                        <Button Command="{Binding CloseButton}" Width="30" Height="30" Content="🞩" Background="Transparent" BorderThickness="0" Foreground="Gray" FontWeight="Bold"/>
+                    </StackPanel>
+                </Grid>
             </Border>
-            <!-- Textbox to display result-->
-            <TextBox Grid.ColumnSpan="4" Grid.Column="1" Grid.Row="1" FontSize="20" Text="{Binding Path=Result,  Mode=TwoWay}"  Margin="5" />
+        
+            <!-- Attached selection button-->
+            <StackPanel Grid.Column="0" Grid.Row="1">
+                    <RadioButton Command="{Binding MainView}" Style="{StaticResource MenuButton}"  Content="Standard" Foreground="White"  Height="40" />
+                    <RadioButton Command="{Binding OtherView}" Style="{StaticResource MenuButton}" Content="Other" Foreground="White" Height="40"  />
+            </StackPanel >
+            <!-- Attached View-->
+            <ContentControl Grid.Row="1" Grid.Column="1"  Content="{Binding CurrentView}">
             
-            <!-- Numbers buttons-->
-            <Button Grid.Column="1" Grid.Row="2" Margin="5">1</Button>
-            <Button Grid.Column="1" Grid.Row="3" Margin="5">4</Button>
-            <Button Grid.Column="1" Grid.Row="4" Margin="5">7</Button>
-
-            <Button Grid.Column="2" Grid.Row="2" Margin="5">2</Button>
-            <Button Grid.Column="2" Grid.Row="3" Margin="5">5</Button>
-            <Button Grid.Column="2" Grid.Row="4" Margin="5">8</Button>
-
-            <Button Grid.Column="3" Grid.Row="2" Margin="5">3</Button>
-            <Button Grid.Column="3" Grid.Row="3" Margin="5">6</Button>
-            <Button Grid.Column="3" Grid.Row="4" Margin="5">9</Button>
-
-            <Button Grid.Column="2" Grid.Row="5" Margin="5">0</Button>
-
-            <!-- Math buttons-->
-
-            <Button Grid.Column="4" Grid.Row="2" Margin="5">+</Button>
-            <Button Grid.Column="4" Grid.Row="3" Margin="5">-</Button>
-            <Button Grid.Column="4" Grid.Row="4" Margin="5">*</Button>
-            <Button Grid.Column="4" Grid.Row="5" Margin="5">/</Button>
-            <Button Command="{Binding PerformCalculation}" Grid.Column="3" Grid.Row="5" Margin="5">=</Button>
-
-
-            <Button Grid.Column="1" Grid.Row="6" Margin="5">+-</Button>
-            <Button Command="{Binding ClearLastValue}" Grid.Column="3" Grid.Row="6" Margin="5" Content="&lt;="/>
-            <Button Command ="{Binding ClearButton}"  Grid.Column="2" Grid.Row="6" Margin="5">C</Button>
-            <Button Grid.Column="4" Grid.Row="6" Margin="5">%</Button>
-            <Button Grid.Column="1" Grid.Row="5" Margin="5">.</Button>
+            </ContentControl>
         </Grid>
- 
+    </Border>
 </Window>

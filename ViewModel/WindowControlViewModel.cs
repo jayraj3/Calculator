@@ -9,6 +9,29 @@ namespace Calculator.ViewModel
 
     class WindowControlViewModel : BaseViewModel
     {
+
+
+        #region Property
+        private NormalCalculator windowVM = new NormalCalculator();
+
+        public NormalCalculator MainControlVM 
+        {
+           get { return windowVM; }
+        }
+
+        public NormalCalculator normalCalculator { get; set; }
+        public OtherViewModel otherM { get; set; }
+        private object _currentView;
+        public object CurrentView
+        {
+            get { return _currentView; }
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
         #region Relay Command
         private RelayCommand _closeButton;
         /// <summary>
@@ -18,7 +41,7 @@ namespace Calculator.ViewModel
         {
             get
             {
-                if(_closeButton == null)
+                if (_closeButton == null)
                 {
                     _closeButton = new RelayCommand(param => CloseButtonCommand(param), CanClickCloseButtonCommand);
                 }
@@ -66,6 +89,41 @@ namespace Calculator.ViewModel
         }
 
 
+        private RelayCommand _otherView;
+        /// <summary>
+        /// Change to other window command
+        /// </summary>
+        public ICommand OtherView
+        {
+            get
+            {
+                if (_otherView == null)
+                {
+                    _otherView = new RelayCommand(param => OpenOtherView(param), CanClickOtherView);
+                }
+
+                return _otherView;
+
+            }
+        }
+        private RelayCommand _mainView;
+
+        /// <summary>
+        /// Main window control command
+        /// </summary>
+        public ICommand MainView
+        {
+            get
+            {
+                if (_mainView == null)
+                {
+                    _mainView = new RelayCommand(param => OpenMainView(param), CanClickMainView);
+                }
+
+                return _mainView;
+
+            }
+        }
 
         #endregion
         #region Methods
@@ -95,7 +153,7 @@ namespace Calculator.ViewModel
 
         private void MinimizeButtonCommand(object param)
         {
-          Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
 
@@ -118,6 +176,38 @@ namespace Calculator.ViewModel
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
             }
         }
+
+
+        private void OpenOtherView(object param)
+        {
+            CurrentView = otherM;
+        }
+
+        private bool CanClickOtherView(object obj)
+        {
+            return true;
+        }
+
+        private void OpenMainView(object param)
+        {
+            CurrentView = normalCalculator;
+        }
+
+        private bool CanClickMainView(object obj)
+        {
+            return true;
+        }
+
+
+
+        public WindowControlViewModel()
+        {
+            normalCalculator = new NormalCalculator();
+            otherM = new OtherViewModel();
+            CurrentView = normalCalculator;
+
+        }
+
     }
 
 }

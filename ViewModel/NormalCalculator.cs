@@ -1,40 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
 using System.Windows.Input;
 using Calculator.Common.Commands;
 using Calculator.Core.Calculators;
 
 namespace Calculator.ViewModel
 {
-    class MainWindowViewModel : BaseViewModel
+    class NormalCalculator : BaseViewModel
     {
         #region Public Properties
 
         private string _result;
-
-        private WindowControlViewModel windowControlVM = new WindowControlViewModel();
-
-        public WindowControlViewModel WindowControlVM 
-        {
-            get { return windowControlVM; }
-        }
-
-
         public string Result
         {
             get { return _result; }
-            set { _result = value;
+            set
+            {
+                _result = value;
                 OnPropertyChanged("Result");
             }
         }
         #endregion
 
         #region Relay Commands
-        //Click button command0
+        
         private RelayCommand clickButton;
-
+        /// <summary>
+        /// Number button command
+        /// </summary>
         public ICommand ClickButton
         {
             get
@@ -48,6 +42,9 @@ namespace Calculator.ViewModel
         }
         private RelayCommand clearButton;
 
+        /// <summary>
+        /// Clear textbox command
+        /// </summary>
         public ICommand ClearButton
         {
             get
@@ -61,7 +58,9 @@ namespace Calculator.ViewModel
         }
 
         private RelayCommand clearLastValue;
-
+        /// <summary>
+        /// Delete last entered value command
+        /// </summary>
         public ICommand ClearLastValue
         {
             get
@@ -75,7 +74,9 @@ namespace Calculator.ViewModel
         }
 
         private RelayCommand performCalculation;
-
+        /// <summary>
+        /// Perform calculation based on provided expression command
+        /// </summary>
         public ICommand PerformCalculation
         {
             get
@@ -87,13 +88,13 @@ namespace Calculator.ViewModel
                 return performCalculation;
             }
         }
-
-
         #endregion
 
         #region Methods
 
-
+        /// <summary>
+        /// Delete last entered value method
+        /// </summary>
         private void ClearLastV(object param)
         {
             if (Result != null)
@@ -114,7 +115,9 @@ namespace Calculator.ViewModel
         {
             return true;
         }
-
+        /// <summary>
+        /// Clear textbox method
+        /// </summary>
         private void Clear()
         {
             Result = string.Empty;
@@ -124,7 +127,9 @@ namespace Calculator.ViewModel
         {
             return true;
         }
-
+        /// <summary>
+        /// Number button method to get entered value
+        /// </summary>
         private void ClickButtonCommand(object buttonValue)
         {
 
@@ -135,7 +140,9 @@ namespace Calculator.ViewModel
         {
             return true;
         }
-
+        /// <summary>
+        /// Perform calculation based on provided expression method
+        /// </summary>
         private void PCalculation(object param)
         {
             ExpressionCalculator calc = new ExpressionCalculator();

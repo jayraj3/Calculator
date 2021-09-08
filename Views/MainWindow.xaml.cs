@@ -22,14 +22,14 @@ namespace Calculator
     public partial class MainWindow : Window
     {
 
-        private MainWindowViewModel mainWindowViewModel;
-        private WindowControlViewModel windowControlVM;
+        //private MainWindowViewModel mainWindowViewModel;
+        //private WindowControlViewModel windowControlVM;
         public MainWindow()
         {
             InitializeComponent();
-            mainWindowViewModel = new MainWindowViewModel();
-            
-           DataContext = mainWindowViewModel;
+           //windowControlVM = new WindowControlViewModel();
+
+            //DataContext = windowControlVM;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -39,5 +39,6 @@ namespace Calculator
                 DragMove();
             }
         }
+
     }
 }
