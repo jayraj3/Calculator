@@ -8,11 +8,68 @@
              d:DesignHeight="250" d:DesignWidth="200">
     <UserControl.Resources>
         <!-- Standard calculator button style-->
-        <Style TargetType="Button">
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
             <Setter Property="Command" Value="{Binding ClickButton}" />
             <Setter Property="CommandParameter"  Value="{Binding Content,RelativeSource={RelativeSource Self}}"/>
-            <Setter Property="BorderBrush" Value="Aqua"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="8" BorderBrush="Black" BorderThickness="1">
+                                <Border.Background>
+                                    <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                        <RadialGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterX="0.5" CenterY="0.5" 
+                                                        ScaleX="1.5" ScaleY="1.5"/>
+                                                <TranslateTransform X="0.02" Y="0.3"/>
+                                            </TransformGroup>
+                                        </RadialGradientBrush.RelativeTransform>
+                                        <GradientStop Offset="1" Color="AliceBlue"/>
+                                        <GradientStop Offset="0.3" Color="AliceBlue"/>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border">
+                                    <Setter.Value>
+                                        <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                            <RadialGradientBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="1.5" ScaleY="1.5"/>
+                                                    <TranslateTransform X="0.02" Y="0.3"/>
+                                                </TransformGroup>
+                                            </RadialGradientBrush.RelativeTransform>
+                                            <GradientStop Color="Aquamarine" Offset="1"/>
+                                            <GradientStop Color="Aquamarine" Offset="0.3"/>
+                                        </RadialGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+ 
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF33962B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+      
 
     </UserControl.Resources>
     <Grid>
@@ -33,7 +90,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <!--Result display textbox-->
-            <TextBox Grid.ColumnSpan="4" Grid.Column="0" Grid.Row="0" FontSize="20" Text="{Binding Path=Result,  Mode=TwoWay}"  Margin="5" />
+            <TextBox Grid.ColumnSpan="4" Grid.Column="0" Grid.Row="0" FontSize="20" Text="{Binding Path=Result,  Mode=TwoWay}" Padding="5 12 0 0" Margin="5 10 5 10" />
 
             <!-- Numbers buttons-->
             <Button Grid.Column="0" Grid.Row="1" Margin="5">1</Button>
