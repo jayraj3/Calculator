@@ -199,7 +199,6 @@ namespace Calculator.ViewModel
         }
 
 
-
         public WindowControlViewModel()
         {
             normalCalculator = new NormalCalculator();

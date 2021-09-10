@@ -8,4 +8,8 @@ namespace Calculator.Core.Calculators
     {
         double Calculate(string expression);
     }
+    internal interface IRestCall
+    {
+        string ConvertCurrency(string fromCurrency, string toCurrency, double value);
+    }
 }

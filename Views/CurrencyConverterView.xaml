@@ -6,6 +6,75 @@
              xmlns:local="clr-namespace:Calculator.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+
+    <UserControl.Resources>
+        <!-- Standard button style-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            
+            <Setter Property="Command" Value="{Binding ClickButton}" />
+            <Setter Property="CommandParameter"  Value="{Binding Content,RelativeSource={RelativeSource Self}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="8" BorderBrush="Black" BorderThickness="1">
+                                <Border.Background>
+                                    <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                        <RadialGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterX="0.5" CenterY="0.5" 
+                                                        ScaleX="1.5" ScaleY="1.5"/>
+                                                <TranslateTransform X="0.02" Y="0.3"/>
+                                            </TransformGroup>
+                                        </RadialGradientBrush.RelativeTransform>
+                                        <GradientStop Offset="1" Color="AliceBlue"/>
+                                        <GradientStop Offset="0.3" Color="AliceBlue"/>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border">
+                                    <Setter.Value>
+                                        <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                            <RadialGradientBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="1.5" ScaleY="1.5"/>
+                                                    <TranslateTransform X="0.02" Y="0.3"/>
+                                                </TransformGroup>
+                                            </RadialGradientBrush.RelativeTransform>
+                                            <GradientStop Color="Aquamarine" Offset="1"/>
+                                            <GradientStop Color="Aquamarine" Offset="0.3"/>
+                                        </RadialGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF33962B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+    <!--Currency converter window grid-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -18,19 +87,29 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ComboBox Grid.Row="0" Grid.Column="0">
-            <ComboBoxItem Content="JPY"/>
-            <ComboBoxItem Content="INR"/>
-            <ComboBoxItem Content="EUR"/>
-        </ComboBox>
-        <ComboBox Grid.Row="0" Grid.Column="1">
-            <ComboBoxItem Content="JPY"/>
-            <ComboBoxItem Content="INR"/>
-            <ComboBoxItem Content="EUR"/>
-        </ComboBox>
-        <TextBox Grid.Row="1" Grid.Column="0"/>
-        <TextBox Grid.Row="1" Grid.Column="1"/>
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Convert"/>
+        
+        <!--Currency selection comboboxs-->
+        <ComboBox ItemsSource="{Binding Path=Currencies}" 
+                  SelectedValue="{Binding FromCurrency}"
+                  Padding="90 15 0 0"
+                  Grid.Row="0" 
+                  FontSize="20"
+                  Grid.Column="0"/>
+        <ComboBox ItemsSource="{Binding Path=Currencies}" 
+                  SelectedValue="{Binding ToCurrency}"
+                  Padding="90 15 0 0"
+                  FontSize="20"
+                  Grid.Row="0" 
+                  Grid.Column="1"/>
+        
+
+        <!--Input textbox-->
+        <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Path=FromValue,  Mode=TwoWay}" FontSize="20" Padding="5 10 0 0" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=ToValue,  Mode=TwoWay}" FontSize="20" Padding="5 10 0 0"/>
+        <Label Grid.Row="2" Grid.Column="0" Background="AliceBlue" Content="{Binding Path=Date}" FontWeight="Bold" FontSize="12" Padding="20 16 0 0"/>
+        <Button Command="{Binding RefreshRates}" Grid.Row="2" Grid.Column="1" Content="Refresh Rates"/>
+
+        <!--Grid for numbers-->
         <Grid Grid.Row="3" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -43,6 +122,8 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            
+            <!--Numbers button-->
             <Button Grid.Column="0" Grid.Row="0" Content="1" />
             <Button Grid.Column="1" Grid.Row="0" Content="2" />
             <Button Grid.Column="2" Grid.Row="0" Content="3" />
@@ -52,7 +133,9 @@
             <Button Grid.Column="0" Grid.Row="2" Content="7" />
             <Button Grid.Column="1" Grid.Row="2" Content="8" />
             <Button Grid.Column="2" Grid.Row="2" Content="9" />
-            <Button Grid.ColumnSpan="3" Grid.Row="3" Content="0" />
+            <Button Grid.Column="0" Grid.Row="3" Content="." />
+            <Button Grid.Column="1"  Grid.Row="3" Content="0" />
+            <Button Command="{Binding ClearLastValue}" Grid.Column="2" Grid.Row="3" Content="&lt;="/>
         </Grid>
     </Grid>
 </UserControl>
