@@ -9,7 +9,7 @@ namespace Calculator.Core.Calculators
         public double Calculate(string expression)
         {
             // Check for computation sign in the begining
-            Regex CheckBegining = new Regex(@"^[+-/*%]");
+            Regex CheckBegining = new Regex(@"^[+/*%]");
             if (CheckBegining.IsMatch(expression))
             {
                 expression = expression.Remove(0, 1);
