@@ -8,7 +8,8 @@
          xmlns:views="clr-namespace:Calculator.Views"
         mc:Ignorable="d"
         WindowStyle="None"
-        AllowsTransparency="False"
+        AllowsTransparency="True"
+        Background="Transparent"
         ResizeMode="CanResizeWithGrip"
         Height="500" Width="650">
 
@@ -47,7 +48,7 @@
         <!-- Datacontext of ViewModel-->
         <viewModels:WindowControlViewModel/>
     </Window.DataContext>
-    
+
     <Border Background="#372537"
             CornerRadius="10">
         <Grid>
@@ -63,14 +64,14 @@
                 </Grid.RowDefinitions>
         
             <!-- Titlebar border -->
-            <Border Grid.ColumnSpan="5" Background="#252525" CornerRadius="10" MouseDown="Border_MouseDown">
+            <Border Grid.ColumnSpan="5" Background="AliceBlue" CornerRadius="10 10 0 0"  MouseDown="Border_MouseDown">
                 <Grid HorizontalAlignment="Stretch">
                     <Label Content="Calculator" FontSize="20" Foreground="Gray" FontWeight="SemiBold" Margin="5,0,0,0"/>
                     <StackPanel HorizontalAlignment="Right"
                                 Orientation="Horizontal">
-                        <Button Command="{Binding MinimizeButton}" Width="30" Height="30" Content="🗕" Background="Transparent" BorderThickness="0" Foreground="Gray" FontWeight="Bold" Margin="0 0 0 3"/>
-                        <Button Command="{Binding MaximizeButton}" Width="30" Height="30" Content="□" Background="Transparent" BorderThickness="0" Foreground="Gray" FontWeight="Bold"/>
-                        <Button Command="{Binding CloseButton}" Width="30" Height="30" Content="🞩" Background="Transparent" BorderThickness="0" Foreground="Gray" FontWeight="Bold"/>
+                        <Button Command="{Binding MinimizeButton}" Width="30" Height="30" Content="🗕" Background="Transparent" BorderThickness="0" Foreground="Orange" FontWeight="Bold" Margin="0 0 0 3"/>
+                        <Button Command="{Binding MaximizeButton}" Width="30" Height="30" Content="□" Background="Transparent" BorderThickness="0" Foreground="Green" FontWeight="Bold"/>
+                        <Button Command="{Binding CloseButton}" Width="30" Height="30" Content="🞩" Background="Transparent" BorderThickness="0" Foreground="Red" FontWeight="Bold"/>
                     </StackPanel>
                 </Grid>
             </Border>
