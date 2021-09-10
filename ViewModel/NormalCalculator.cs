@@ -11,7 +11,7 @@ namespace Calculator.ViewModel
     {
         #region Public Properties
 
-        private string _result;
+        private string _result = "0";
         public string Result
         {
             get { return _result; }
@@ -120,7 +120,7 @@ namespace Calculator.ViewModel
         /// </summary>
         private void Clear()
         {
-            Result = string.Empty;
+            Result = "0";
         }
 
         private bool CanClickButtonCommand(object param)
@@ -132,8 +132,20 @@ namespace Calculator.ViewModel
         /// </summary>
         private void ClickButtonCommand(object buttonValue)
         {
+            if (Result == "0" & buttonValue.ToString() == "0")
+            {
+                Clear();
+            }
+            else
+            {
+                if (Result == "0")
+                {
+                    Result = "";
+                }
+                Result += buttonValue.ToString();
+            }
 
-            Result += buttonValue.ToString();
+            
         }
 
         private bool CanPCalculation(object obj)

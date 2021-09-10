@@ -90,13 +90,13 @@
         
         <!--Currency selection comboboxs-->
         <ComboBox ItemsSource="{Binding Path=Currencies}" 
-                  SelectedValue="{Binding FromCurrency}"
+                  SelectedValue="{Binding Path=FromCurrency}"
                   Padding="90 15 0 0"
                   Grid.Row="0" 
                   FontSize="20"
                   Grid.Column="0"/>
         <ComboBox ItemsSource="{Binding Path=Currencies}" 
-                  SelectedValue="{Binding ToCurrency}"
+                  SelectedValue="{Binding Path=ToCurrency}"
                   Padding="90 15 0 0"
                   FontSize="20"
                   Grid.Row="0" 
@@ -106,7 +106,9 @@
         <!--Input textbox-->
         <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Path=FromValue,  Mode=TwoWay}" FontSize="20" Padding="5 10 0 0" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=ToValue,  Mode=TwoWay}" FontSize="20" Padding="5 10 0 0"/>
+        <Border Grid.Row="2" Grid.Column="0" CornerRadius="20" BorderBrush="Black" BorderThickness="1" >
         <Label Grid.Row="2" Grid.Column="0" Background="AliceBlue" Content="{Binding Path=Date}" FontWeight="Bold" FontSize="12" Padding="20 16 0 0"/>
+        </Border>
         <Button Command="{Binding RefreshRates}" Grid.Row="2" Grid.Column="1" Content="Refresh Rates"/>
 
         <!--Grid for numbers-->
